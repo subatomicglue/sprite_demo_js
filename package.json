@@ -1,0 +1,17 @@
+{
+  "name": "SimpleSpriteDemo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "open http://localhost:8080; ./node_modules/.bin/http-server",
+    "clobber": "rm -rf node_modules",
+    "reinstall": "npm run clobber; npm install"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "http-server": "^0.11.1"
+  }
+}
