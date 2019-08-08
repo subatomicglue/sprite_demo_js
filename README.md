@@ -8,4 +8,6 @@ Simple sprite based game starter.
 
 Tutorial for HTML 2D Canvas drawing with well commented and simple to read code.
 
+use arrow keys to move character
+
 
