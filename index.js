@@ -8,6 +8,10 @@
 //   map      = grid of indexes into those sprite tiles (what sprite to show for each tile)
 //   mapx     = how wide is the map grid
 //   collidable = the indexes that result in a collision, when calling Map.collide() 
+//
+// example usage:
+//   let map = new Map( "walls.jpg", 8, 16, 32, [2,2,2,2, 2,3,4,2, 2,5,6,2, 2,2,2,2], [2, 6] )
+//   map.draw( canvas.getContext("2d") );
 function Map( filename, tilesx = 8, tilesy = 16, mapx = 4, map = [2,2,2,2, 2,3,4,2, 2,5,6,2, 2,2,2,2], collidable = [2, 7, 12, 17] ) {
   this.img = new Image();    // a new empty image
   this.img.addEventListener( "load", () => {
@@ -87,6 +91,10 @@ function Map( filename, tilesx = 8, tilesy = 16, mapx = 4, map = [2,2,2,2, 2,3,4
 //   tilesx/y   = how many sprite tiles are in the image
 //   sequences  = several named animations, each one containing a sequence of tiles and the speed to play
 //   updateFunc = called for each draw()
+//
+// example usage:
+//   let actor = new Sprite( "sprites.png", 40,40, 9,4, { default: {interval: 0.05, frames: [[0,3], ] } }, { x: 22, y: 15, w: 20, h: 48 }, actor => {} )
+//   actor.draw( canvas.getContext("2d") );
 function Sprite( filename, x, y, tilesx = 9, tilesy = 4, sequences = {default: {interval: 0.4, frames: [[0,0], [1,0]]} }, bbox = { x: 22, y: 15, w: 20, h: 48 }, updateFunc = (s) => {} ) {
   this.img = new Image();    // a new empty image
   this.img.addEventListener( "load", () => {
@@ -213,7 +221,7 @@ let actors = [
       actor.y += actor.dy * 1/fps; // move by dy every second
     }
   }),
-]
+]; // end of actor array...
 
 ////////////////////////////////////////////////////////////////////////////////
 // game loop methods
