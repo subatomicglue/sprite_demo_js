@@ -1,7 +1,7 @@
 
 # Simple Sprite Demo
 
-<img alt='maggen' title='maggen' src="screenshot.jpg" width='350'>
+<img alt='simple sprite based game, screenshot' title='simple sprite based game, screenshot' src="screenshot.jpg" width='350'>
 
 
 Simple sprite based game starter.
