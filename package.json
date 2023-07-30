@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "help": "echo 'start | clobber | reinstall'",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "open http://localhost:8080; ./node_modules/.bin/http-server",
     "clobber": "rm -rf node_modules",
