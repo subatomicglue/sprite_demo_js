@@ -36,7 +36,7 @@ function draw() {
 // called on viewport resize
 function resize() {
   // Check if the viewport size changed
-  // - Check if the canvas's image buffer is not the same size as the browser's area.
+  // - Check if the canvas's image buffer != same size as the browser's area.
   if (canvas.width  != canvas.clientWidth ||
       canvas.height != canvas.clientHeight) {
     // Make the canvas the same size
