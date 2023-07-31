@@ -18,6 +18,8 @@ import { vec, radialToCartesian, sqr, mag,
 //   let map = new Map( "walls.jpg", 8, 16, 32, [2,2,2,2, 2,3,4,2, 2,5,6,2, 2,2,2,2], [2, 6] )
 //   map.draw( canvas.getContext("2d") );
 export class Map {
+  onCollideFunc = (me, actor) => {};
+
   constructor( name, filename, tilesx = 8, tilesy = 16, mapx = 4,
               map = [2,2,2,2, 2,3,4,2, 2,5,6,2, 2,2,2,2],
               collidable = [2, 7, 12, 17] ) {

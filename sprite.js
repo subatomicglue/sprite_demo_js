@@ -30,13 +30,15 @@ export class Sprite {
   sequences = {default: {interval: 0.4, frames: [[0,0], [1,0]]} };
   bbox = { x: 22, y: 15, w: 20, h: 48 };
   updateFunc = (s) => {};
+  onCollideFunc = (me, actor, caused) => {};
   name = "";
 
   // called when new Sprite( ..... ) is invoked, to setup the new sprite
   constructor( name, filename, x, y, dx=0, dy=0, tilesx = 9, tilesy = 4,
               sequences = {default: {interval: 0.4, frames: [[0,0], [1,0]]} },
               bbox = { x: 22, y: 15, w: 20, h: 48 },
-              updateFunc = (s) => {} ) {
+              updateFunc = (s) => {},
+              onCollideFunc = (me, actor, caused) => {} ) {
     this.img = new Image();    // a new empty image
     this.img.addEventListener( "load", () => {
       this.width = this.img.width / this.tilesx;
@@ -58,6 +60,7 @@ export class Sprite {
     this.bbox = { x: 22, y: 15, w: 20, h: 48 }; // collision bounding box relative to x/y
     this.showbbox = false;     // debug: display the bounding box
     this.updateFunc = updateFunc;
+    this.onCollideFunc = onCollideFunc;
     this.name = name;
     this.anim_name = "default";
   }

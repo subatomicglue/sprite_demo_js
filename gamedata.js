@@ -17,8 +17,13 @@ let player_behavior = (actor) => {
   });
 
   // log who we hit
-  if (collided_actors.length > 0)
+  if (collided_actors.length > 0) {
+    collided_actors.forEach( a => {
+      actor.onCollideFunc( actor, a, true );
+      a.onCollideFunc( a, actor, false );
+    });
     console.log( `${actor.name} collided with ${collided_actors.map( a => a.name ).join( ", " )}` )
+  }
 
   // move the actor by its velocity, as long as it isnt colliding
   if (collided_actors.length == 0) {
@@ -36,35 +41,7 @@ let player_behavior = (actor) => {
 
 // update function for enemy actors
 let enemy_behavior = (actor) => {
-  let collided_actors = actors.filter( a => {
-    if (a == actor) return false
-    return a.collideBox( actor.x + actor.bbox.x + actor.dx * 1/fps,
-                        actor.y + actor.bbox.y + actor.dy * 1/fps,
-                        actor.bbox.w,
-                        actor.bbox.h );
-  });
-
-  // log who we hit
-  if (collided_actors.length > 0)
-    console.log( `${actor.name} collided with ${collided_actors.map( a => a.name ).join( ", " )}` )
-
-  if (collided_actors.length > 0) {
-    actor.dx = -actor.dx;
-    actor.dy = -actor.dy;
-  }
-
-  // move the actor by its velocity, as long as it isnt colliding
-  if (collided_actors.length == 0) {
-    actor.x += actor.dx * 1/fps; // move by dx every second
-    actor.y += actor.dy * 1/fps; // move by dy every second
-  }
-
-  // update animation based on velocty
-  if (0 < actor.dx) actor.changeSequence("right");
-  else if (actor.dx < 0) actor.changeSequence("left");
-  else if (0 < actor.dy) actor.changeSequence("down");
-  else if (actor.dy < 0) actor.changeSequence("up");
-  else if (!actor.anim_name.match( /(_idle$|^default$)/ )) actor.changeSequence(actor.anim_name + "_idle");
+  player_behavior( actor )
 };
 
 // list of game actors
@@ -153,6 +130,15 @@ export let actors = [
     { x: 22, y: 15, w: 20, h: 48 },
 
     // update function
-    enemy_behavior
+    enemy_behavior,
+
+    // called on collision
+    (me, actor, caused) => {
+      // turn around only if I caused the collision
+      if (caused) {
+        me.dx = -me.dx;
+        me.dy = -me.dy;
+      }
+    }
   ),
 ]; // end of actor array...
