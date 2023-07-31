@@ -20,6 +20,11 @@ let actor_update_func = (actor) => {
                         actor.bbox.h );
   });
 
+  // log who we hit
+  if (collided_actors.length > 0)
+    console.log( "collided with:", collided_actors.map( a => a.name ).join( ", " ))
+
+  // move the actor by its velocity, as long as it isnt colliding
   if (collided_actors.length == 0) {
     actor.x += actor.dx * 1/fps; // move by dx every second
     actor.y += actor.dy * 1/fps; // move by dy every second
@@ -72,7 +77,7 @@ export let actors = [
   [2, 7, 12, 17] ),
 
   // actors[1] is the player character
-  new Sprite( "sprites.png", 400,40, 9,4,
+  new Sprite( "Player Character", "sprites.png", 400,40, 9,4,
     // sprite animation sequences (see image for the frames used below)
     {
       default: {interval: 0.05, frames: [[0,3], ] },
@@ -94,7 +99,7 @@ export let actors = [
   ),
 
   // enemy
-  new Sprite( "sprites.png", 400,160, 9,4,
+  new Sprite( "Enemy", "sprites.png", 400,160, 9,4,
     // sprite animation sequences (see image for the frames used below)
     {
       default: {interval: 0.05, frames: [[0,3], ] },

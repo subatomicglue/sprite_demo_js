@@ -30,9 +30,10 @@ export class Sprite {
   sequences = {default: {interval: 0.4, frames: [[0,0], [1,0]]} };
   bbox = { x: 22, y: 15, w: 20, h: 48 };
   updateFunc = (s) => {};
+  name = "";
 
   // called when new Sprite( ..... ) is invoked, to setup the new sprite
-  constructor( filename, x, y, tilesx = 9, tilesy = 4,
+  constructor( name, filename, x, y, tilesx = 9, tilesy = 4,
               sequences = {default: {interval: 0.4, frames: [[0,0], [1,0]]} },
               bbox = { x: 22, y: 15, w: 20, h: 48 },
               updateFunc = (s) => {} ) {
@@ -57,6 +58,7 @@ export class Sprite {
     this.bbox = { x: 22, y: 15, w: 20, h: 48 }; // collision bounding box relative to x/y
     this.showbbox = false;     // debug: display the bounding box
     this.updateFunc = updateFunc;
+    this.name = name;
   }
 
   // draw the sprite using the given canvas ctx
