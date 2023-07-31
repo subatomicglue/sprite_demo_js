@@ -7,11 +7,6 @@ import { Sprite } from "/sprite.js";
 export let fps = 30;  // frame rate  (film is 24hz, TV at 60hz)
 
 let actor_update_func = (actor) => {
-  // if (!actors[0].collide( actor.x + actor.dx * 1/fps, actor.y + actor.dy * 1/fps )) {
-  //   actor.x += actor.dx * 1/fps; // move by dx every second
-  //   actor.y += actor.dy * 1/fps; // move by dy every second
-  // }
-
   let collided_actors = actors.filter( a => {
     if (a == actor) return false
     return a.collideBox( actor.x + actor.bbox.x + actor.dx * 1/fps,
@@ -38,7 +33,7 @@ let actor_update_func = (actor) => {
 // - our PC (player character) is always at actor[1]
 export let actors = [
   // actors[0] is the map
-  new Map( "walls.jpg", 8, 16, 32, [
+  new Map( "Level 1", "walls.jpg", 8, 16, 32, [
     // define the map, using tile ID (see image)
     2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
     2, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 2,

@@ -18,7 +18,7 @@ import { vec, radialToCartesian, sqr, mag,
 //   let map = new Map( "walls.jpg", 8, 16, 32, [2,2,2,2, 2,3,4,2, 2,5,6,2, 2,2,2,2], [2, 6] )
 //   map.draw( canvas.getContext("2d") );
 export class Map {
-  constructor( filename, tilesx = 8, tilesy = 16, mapx = 4,
+  constructor( name, filename, tilesx = 8, tilesy = 16, mapx = 4,
               map = [2,2,2,2, 2,3,4,2, 2,5,6,2, 2,2,2,2],
               collidable = [2, 7, 12, 17] ) {
     this.img = new Image();    // a new empty image
@@ -35,6 +35,7 @@ export class Map {
     this.collidable = collidable; // which sprite indexes are collidable
     this.x = 0;             // offset to draw the map into the canvas
     this.y = 0;             // offset to draw the map into the canvas
+    this.name = name;
   }
 
   draw( ctx ) {
