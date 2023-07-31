@@ -33,7 +33,7 @@ export class Sprite {
   name = "";
 
   // called when new Sprite( ..... ) is invoked, to setup the new sprite
-  constructor( name, filename, x, y, tilesx = 9, tilesy = 4,
+  constructor( name, filename, x, y, dx=0, dy=0, tilesx = 9, tilesy = 4,
               sequences = {default: {interval: 0.4, frames: [[0,0], [1,0]]} },
               bbox = { x: 22, y: 15, w: 20, h: 48 },
               updateFunc = (s) => {} ) {
@@ -53,12 +53,13 @@ export class Sprite {
     this.anim = 0;            // animation clock, controls which frame to display, loops
     this.sequences = sequences; // collection of named animation sequences, e.g. { default: {interval: 0.4, frames: [[0,0], [1,0]]}, ... }
     this.animation = this.sequences.default; // current sequence, e.g. {interval: 0.4, frames: [[0,0], [1,0]]}
-    this.dx = 0;              // velocity in x
-    this.dy = 0;              // velocity in y
+    this.dx = dx;              // velocity in x
+    this.dy = dy;              // velocity in y
     this.bbox = { x: 22, y: 15, w: 20, h: 48 }; // collision bounding box relative to x/y
     this.showbbox = false;     // debug: display the bounding box
     this.updateFunc = updateFunc;
     this.name = name;
+    this.anim_name = "default";
   }
 
   // draw the sprite using the given canvas ctx
@@ -87,8 +88,13 @@ export class Sprite {
   // change animation to another sequence
   //   (of the named sequences initially given to new Sprite( ... ))
   changeSequence( name ) {
-    this.animation = this.sequences[name] ? this.sequences[name] : this.sequences.default;
-    this.anim = 0;
+    let new_anim = this.sequences[name] ? this.sequences[name] : this.sequences.default;
+    if (this.animation != new_anim) {
+      this.animation = new_anim;
+      this.anim = 0;
+      this.anim_name = name;
+      console.log( `${this.name} changed animation to ${this.anim_name}`)
+    }
   }
 
   // does the box intersect?

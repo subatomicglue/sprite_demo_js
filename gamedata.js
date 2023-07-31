@@ -6,7 +6,8 @@ import { Sprite } from "/sprite.js";
 
 export let fps = 30;  // frame rate  (film is 24hz, TV at 60hz)
 
-let actor_update_func = (actor) => {
+// update function for player characters
+let player_behavior = (actor) => {
   let collided_actors = actors.filter( a => {
     if (a == actor) return false
     return a.collideBox( actor.x + actor.bbox.x + actor.dx * 1/fps,
@@ -17,13 +18,53 @@ let actor_update_func = (actor) => {
 
   // log who we hit
   if (collided_actors.length > 0)
-    console.log( "collided with:", collided_actors.map( a => a.name ).join( ", " ))
+    console.log( `${actor.name} collided with ${collided_actors.map( a => a.name ).join( ", " )}` )
 
   // move the actor by its velocity, as long as it isnt colliding
   if (collided_actors.length == 0) {
     actor.x += actor.dx * 1/fps; // move by dx every second
     actor.y += actor.dy * 1/fps; // move by dy every second
   }
+
+  // update animation based on velocty
+  if (0 < actor.dx) actor.changeSequence("right");
+  else if (actor.dx < 0) actor.changeSequence("left");
+  else if (0 < actor.dy) actor.changeSequence("down");
+  else if (actor.dy < 0) actor.changeSequence("up");
+  else if (!actor.anim_name.match( /(_idle$|^default$)/ )) actor.changeSequence(actor.anim_name + "_idle");
+};
+
+// update function for enemy actors
+let enemy_behavior = (actor) => {
+  let collided_actors = actors.filter( a => {
+    if (a == actor) return false
+    return a.collideBox( actor.x + actor.bbox.x + actor.dx * 1/fps,
+                        actor.y + actor.bbox.y + actor.dy * 1/fps,
+                        actor.bbox.w,
+                        actor.bbox.h );
+  });
+
+  // log who we hit
+  if (collided_actors.length > 0)
+    console.log( `${actor.name} collided with ${collided_actors.map( a => a.name ).join( ", " )}` )
+
+  if (collided_actors.length > 0) {
+    actor.dx = -actor.dx;
+    actor.dy = -actor.dy;
+  }
+
+  // move the actor by its velocity, as long as it isnt colliding
+  if (collided_actors.length == 0) {
+    actor.x += actor.dx * 1/fps; // move by dx every second
+    actor.y += actor.dy * 1/fps; // move by dy every second
+  }
+
+  // update animation based on velocty
+  if (0 < actor.dx) actor.changeSequence("right");
+  else if (actor.dx < 0) actor.changeSequence("left");
+  else if (0 < actor.dy) actor.changeSequence("down");
+  else if (actor.dy < 0) actor.changeSequence("up");
+  else if (!actor.anim_name.match( /(_idle$|^default$)/ )) actor.changeSequence(actor.anim_name + "_idle");
 };
 
 // list of game actors
@@ -72,7 +113,7 @@ export let actors = [
   [2, 7, 12, 17] ),
 
   // actors[1] is the player character
-  new Sprite( "Player Character", "sprites.png", 400,40, 9,4,
+  new Sprite( "Player Character", "sprites.png", 400,40, 0,0, 9,4,
     // sprite animation sequences (see image for the frames used below)
     {
       default: {interval: 0.05, frames: [[0,3], ] },
@@ -90,11 +131,11 @@ export let actors = [
     { x: 22, y: 15, w: 20, h: 48 },
 
     // update function
-    actor_update_func
+    player_behavior
   ),
 
   // enemy
-  new Sprite( "Enemy", "sprites.png", 400,160, 9,4,
+  new Sprite( "Enemy", "sprites.png", 400,160, -32,32, 9,4,
     // sprite animation sequences (see image for the frames used below)
     {
       default: {interval: 0.05, frames: [[0,3], ] },
@@ -112,6 +153,6 @@ export let actors = [
     { x: 22, y: 15, w: 20, h: 48 },
 
     // update function
-    actor_update_func
+    enemy_behavior
   ),
 ]; // end of actor array...

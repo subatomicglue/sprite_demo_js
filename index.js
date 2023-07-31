@@ -61,22 +61,18 @@ document.onkeydown = (event) => {
   let speed = 3;
   switch (event.key) {
     case "ArrowLeft":
-      actors[1].changeSequence("left");
       actors[1].dx = -32*speed;
       actors[1].dy = 0;
       break;
     case "ArrowRight":
-      actors[1].changeSequence("right");
       actors[1].dx = 32*speed;
       actors[1].dy = 0;
       break;
     case "ArrowUp":
-      actors[1].changeSequence("up");
       actors[1].dx = 0;
       actors[1].dy = -32*speed;
       break;
     case "ArrowDown":
-      actors[1].changeSequence("down");
       actors[1].dx = 0;
       actors[1].dy = 32*speed;
       break;
@@ -89,20 +85,16 @@ document.onkeyup = (event) => {
   // cancel velocity
   actors[1].dx = 0;
   actors[1].dy = 0;
-  switch (event.key) {
-    case "ArrowLeft":
-      actors[1].changeSequence("left_idle");
-      break;
-    case "ArrowRight":
-      actors[1].changeSequence("right_idle");
-      break;
-    case "ArrowUp":
-      actors[1].changeSequence("up_idle");
-      break;
-    case "ArrowDown":
-      actors[1].changeSequence("down_idle");
-      break;
-  }
+  // switch (event.key) {
+  //   case "ArrowLeft":
+  //     break;
+  //   case "ArrowRight":
+  //     break;
+  //   case "ArrowUp":
+  //     break;
+  //   case "ArrowDown":
+  //     break;
+  // }
   console.log('keyup event\n\n' + 'key: ' + event.key, " repeat: ", event.repeat);
 };
 
