@@ -80,12 +80,18 @@ export class Sprite {
     //console.log( `${Math.floor( this.anim ) * this.width} ${Math.floor( this.bank ) * this.height}`)
 
     this.updateFunc( this );
-  };
+  }
 
   // change animation to another sequence
   //   (of the named sequences initially given to new Sprite( ... ))
   changeSequence( name ) {
     this.animation = this.sequences[name] ? this.sequences[name] : this.sequences.default;
     this.anim = 0;
+  }
+
+  // does the box intersect?
+  collideBox( x, y, width, height ) {
+    return  !((x+width) < (this.x+this.bbox.x) || (this.x + this.bbox.x + this.bbox.w) < x) &&
+            !((y+height) < (this.y+this.bbox.y) || (this.y + this.bbox.y + this.bbox.h) < y)
   }
 }
