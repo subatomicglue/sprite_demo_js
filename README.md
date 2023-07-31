@@ -10,4 +10,23 @@ Tutorial for HTML 2D Canvas drawing with well commented and simple to read code.
 
 use arrow keys to move character
 
+## Setup
+requires nodejs installed to get `npm`
+```
+$ npm install
+```
+
+## Run
+start a web server and open the localhost webpage
+```
+$ npm run help
+start | clobber | reinstall
+
+# on MacOS only (uses the MacOS open command to open the webpage):
+$ npm start
+
+# other platforms:
+$ ./node_modules/.bin/http-server
+# then open http://localhost:8080 in chrome
+```
 
