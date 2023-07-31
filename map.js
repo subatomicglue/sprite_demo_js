@@ -17,30 +17,34 @@ import { vec, radialToCartesian, sqr, mag,
 // example usage:
 //   let map = new Map( "walls.jpg", 8, 16, 32, [2,2,2,2, 2,3,4,2, 2,5,6,2, 2,2,2,2], [2, 6] )
 //   map.draw( canvas.getContext("2d") );
-export function Map( filename, tilesx = 8, tilesy = 16, mapx = 4, map = [2,2,2,2, 2,3,4,2, 2,5,6,2, 2,2,2,2], collidable = [2, 7, 12, 17] ) {
-  this.img = new Image();    // a new empty image
-  this.img.addEventListener( "load", () => {
-    this.width = this.img.width / this.tilesx;
-    this.height = this.img.height / this.tilesy;
-    console.log( `Map ${filename} loaded ${this.img.width} x ${this.img.height} total, ${this.width} x ${this.height} per tile, ${tilesx} x ${tilesy} tiles`)
-  });
-  this.img.src = filename;// loads the image
-  this.tilesx = tilesx;   // number of x sprites in the image
-  this.tilesy = tilesy;   // number of y sprites in the image
-  this.mapx = mapx;       // number of x sprites in the map
-  this.map = map;         // the sprite layout to draw.  e.g. [ 2,2,2,2 ], where each ID is an index into the image counting from left to right, starting at top left.
-  this.collidable = collidable; // which sprite indexes are collidable
-  this.x = 0;             // offset to draw the map into the canvas
-  this.y = 0;             // offset to draw the map into the canvas
+export class Map {
+  constructor( filename, tilesx = 8, tilesy = 16, mapx = 4,
+              map = [2,2,2,2, 2,3,4,2, 2,5,6,2, 2,2,2,2],
+              collidable = [2, 7, 12, 17] ) {
+    this.img = new Image();    // a new empty image
+    this.img.addEventListener( "load", () => {
+      this.width = this.img.width / this.tilesx;
+      this.height = this.img.height / this.tilesy;
+      console.log( `Map ${filename} loaded ${this.img.width} x ${this.img.height} total, ${this.width} x ${this.height} per tile, ${tilesx} x ${tilesy} tiles`)
+    });
+    this.img.src = filename;// loads the image
+    this.tilesx = tilesx;   // number of x sprites in the image
+    this.tilesy = tilesy;   // number of y sprites in the image
+    this.mapx = mapx;       // number of x sprites in the map
+    this.map = map;         // the sprite layout to draw.  e.g. [ 2,2,2,2 ], where each ID is an index into the image counting from left to right, starting at top left.
+    this.collidable = collidable; // which sprite indexes are collidable
+    this.x = 0;             // offset to draw the map into the canvas
+    this.y = 0;             // offset to draw the map into the canvas
+  }
 
-  this.draw = function( ctx ) {
+  draw( ctx ) {
     // todo: detect parent viewport extents, dont bother drawing out of bounds
 
-    for (let i = 0; i < map.length; ++i) {
-      let x = i % mapx;
-      let y = Math.floor( i / mapx );
-      let tx = map[i] % tilesx;
-      let ty = Math.floor( map[i] / tilesx );
+    for (let i = 0; i < this.map.length; ++i) {
+      let x = i % this.mapx;
+      let y = Math.floor( i / this.mapx );
+      let tx = this.map[i] % this.tilesx;
+      let ty = Math.floor( this.map[i] / this.tilesx );
 
       // draws the image into the canvas
       ctx.drawImage( this.img,
@@ -52,12 +56,12 @@ export function Map( filename, tilesx = 8, tilesy = 16, mapx = 4, map = [2,2,2,2
     }
   }
 
-  function mapXYtoIndex( x, y ) {
+  mapXYtoIndex( x, y ) {
     return x + y * this.mapx;
   }
 
   // does x,y intersect a collidable tile?
-  this.collide = function ( x, y ) {
+  collide( x, y ) {
     let mapx = Math.floor( x / this.width - this.x + 1);
     let mapy = Math.floor( y / this.height - this.y + 1 );
     let mapindex = mapx + mapy * this.mapx; // get the map grid location of x,y
@@ -66,7 +70,7 @@ export function Map( filename, tilesx = 8, tilesy = 16, mapx = 4, map = [2,2,2,2
   }
 
   // does the box intersect a collidable tile?
-  this.collideBox = function ( x, y, width, height ) {
+  collideBox( x, y, width, height ) {
     let topleft = vec( x, y );
     let botright = vec( x+width, y+height );
     // what map tiles does the given box pass through?
