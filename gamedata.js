@@ -13,7 +13,7 @@ export let fps = 30;  // frame rate  (film is 24hz, TV at 60hz)
 // - our PC (player character) is always at actor[1]
 export let actors = [
   // actors[0] is the map
-  new Map( filename = "walls.jpg", tilesx = 8, tilesy = 16, mapx = 32, map = [
+  new Map( "walls.jpg", 8, 16, 32, [
     // define the map, using tile ID (see image)
     2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
     2, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 2,
@@ -49,12 +49,12 @@ export let actors = [
     2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
   ],
   // these tile IDs will be collidable
-  collidable = [2, 7, 12, 17] ),
+  [2, 7, 12, 17] ),
 
   // actors[1] is the player character
-  new Sprite( filename = "sprites.png", x = 400,y = 40, tilesx=9,tilesy=4,
+  new Sprite( "sprites.png", 400,40, 9,4,
     // sprite animation sequences (see image for the frames used below)
-    sequences = {
+    {
       default: {interval: 0.05, frames: [[0,3], ] },
       up: {interval: 0.5, frames: [[1,0], [2,0], [3,0], [4,0], [5,0], [6,0], [7,0], [8,0], ] },
       left: {interval: 0.25, frames: [[1,1], [2,1], [3,1], [4,1], [5,1], [6,1], [7,1], [8,1], ] },
@@ -67,10 +67,10 @@ export let actors = [
     },
 
     // bounding box
-    bbox = { x: 22, y: 15, w: 20, h: 48 },
+    { x: 22, y: 15, w: 20, h: 48 },
 
     // update function
-    updateFunc = (actor) => {
+    (actor) => {
       // if (!actors[0].collide( actor.x + actor.dx * 1/fps, actor.y + actor.dy * 1/fps )) {
       //   actor.x += actor.dx * 1/fps; // move by dx every second
       //   actor.y += actor.dy * 1/fps; // move by dy every second
