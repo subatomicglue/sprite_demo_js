@@ -108,7 +108,20 @@ export let actors = [
     { x: 22, y: 15, w: 20, h: 48 },
 
     // update function
-    player_behavior
+    player_behavior,
+
+    // collide func
+    (my_actor, other_actor, caused) => {
+      if (other_actor.hp == undefined) {
+        my_actor.hp = my_actor.hp - 1
+        console.log (`${my_actor.name} touched ${other_actor}`, my_actor.hp)
+      }
+    },
+
+    // init func
+    (me) => {
+      me.hp = 100
+    }
   ),
 
   // enemy
@@ -126,7 +139,7 @@ export let actors = [
       right_idle:  {interval: 0.05, frames: [[0,3], ] },
     },
 
-    // bounding box
+    // bounding boxlwt 
     { x: 22, y: 15, w: 20, h: 48 },
 
     // update function
@@ -136,9 +149,20 @@ export let actors = [
     (me, actor, caused) => {
       // turn around only if I caused the collision
       if (caused) {
-        me.dx = -me.dx;
-        me.dy = -me.dy;
+        let choice_x = Math.floor(Math.random()+0.5)
+        let choice_y = Math.floor(Math.random()+0.5)
+        me.dx = choice_x ==1 ? me.dx : -me.dx;
+        me.dy = choice_y ==1 ? me.dy : -me.dy;
+        if (actor.hp !== undefined) {
+          actor.hp = actor.hp - 5
+          console.log (`${me.name} touched ${actor.name}`, actor.hp)
+        }
       }
+    },
+
+    // init func
+    (me) => {
+      me.hp = 100
     }
   ),
 ]; // end of actor array...

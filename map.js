@@ -29,7 +29,7 @@ export class Map {
       this.height = this.img.height / this.tilesy;
       console.log( `Map ${filename} loaded ${this.img.width} x ${this.img.height} total, ${this.width} x ${this.height} per tile, ${tilesx} x ${tilesy} tiles`)
     });
-    this.img.src = filename;// loads the image
+    this.img.src = filename;// loads the image "walls.jpg"
     this.tilesx = tilesx;   // number of x sprites in the image
     this.tilesy = tilesy;   // number of y sprites in the image
     this.mapx = mapx;       // number of x sprites in the map

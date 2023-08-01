@@ -38,7 +38,8 @@ export class Sprite {
               sequences = {default: {interval: 0.4, frames: [[0,0], [1,0]]} },
               bbox = { x: 22, y: 15, w: 20, h: 48 },
               updateFunc = (s) => {},
-              onCollideFunc = (me, actor, caused) => {} ) {
+              onCollideFunc = (me, actor, caused) => {},
+              onInitFunc = (me) => {} ) {
     this.img = new Image();    // a new empty image
     this.img.addEventListener( "load", () => {
       this.width = this.img.width / this.tilesx;
@@ -63,6 +64,7 @@ export class Sprite {
     this.onCollideFunc = onCollideFunc;
     this.name = name;
     this.anim_name = "default";
+    onInitFunc(this)
   }
 
   // draw the sprite using the given canvas ctx

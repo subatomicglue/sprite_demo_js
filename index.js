@@ -7,6 +7,10 @@ import { vec, radialToCartesian, sqr, mag,
 import { Map } from "/map.js";
 import { Sprite } from "/sprite.js";
 import { fps, actors } from "/gamedata.js";
+import { UI } from "/ui.js";
+let ui = new UI( name, "green.jpg", 25, 25, 
+  (s) => {},
+  (me) => {}  )
 
 
 // clear the canvas using the given canvas ctx
@@ -27,10 +31,16 @@ function draw() {
   let ctx = canvas.getContext("2d");
   clear( ctx );
 
+  //if (controller_buttons.up && controller_buttons.left)
+
   // draw every actor (map, sprites, etc)
   for (let x=0; x < actors.length; ++x) {
     actors[x].draw( ctx );
   }
+  //draw ui
+  ui.width = actors[1].hp
+  ui.height = 50
+  ui.draw( ctx )
 }
 
 // called on viewport resize
@@ -56,6 +66,12 @@ setInterval( () => {
 
 ////////////////////////////////////////////////////////////////////////////////
 // respond to Input
+let controller_buttons = {
+  up: false,
+  down: false,
+  left: false,
+  right: false,
+}
 document.onkeydown = (event) => {
   if (event.repeat) return;
   let speed = 3;
